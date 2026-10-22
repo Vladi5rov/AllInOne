@@ -1,0 +1,14 @@
+# Node & React
+frontend/node_modules/
+frontend/build/
+build/
+.DS_Store
+
+# PHP / SQLite / Local database & archives
+#air_quality.sqlite
+archives/
+
+# Environment / IDE
+.env
+.idea/
+.vscode/
