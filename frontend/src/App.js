@@ -25,30 +25,34 @@ export default function App() {
 
   // 1. Извличане на данните
   useEffect(() => {
-    fetch('/air_data.php')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Грешка при зареждане на данните от сървъра.');
-        }
-        return response.json();
-      })
-      .then((json) => {
-        const payload = json.data || json;
-        setData(payload);
-        const months = Object.keys(payload).sort();
-        setAvailableMonths(months);
-	    //console.log(months);
+    fetch('/air_data.php')  // http://localhost/Evolution/air-app/air_data.php '  /air_data.php
+		.then(response => response.text())
+		.then(rawText => {
+			const cleanText = rawText.split('<div')[0].trim();  
+			console.log(cleanText);
+			
+			const dataT = JSON.parse(cleanText);
+			console.log(dataT);
 
-        if (months.length > 0) {
-          setStartMonth(months[0]);
-          setEndMonth(months[months.length - 1]);
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
+			return dataT;
+		})	
+		.then((json) => {
+			const payload = json.data || json;
+			setData(payload);
+			const months = Object.keys(payload).sort();
+			setAvailableMonths(months);
+			//console.log(months);
+
+			if (months.length > 0) {
+			  setStartMonth(months[0]);
+			  setEndMonth(months[months.length - 1]);
+			}
+			setLoading(false);
+		})
+		.catch((err) => {
+			setError(err.message);
+			setLoading(false);
+		});
   }, []);
 
   // 2. При натискане на бутона
