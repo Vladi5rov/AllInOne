@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-// Преобразуване на стринг "YYYY-MM" в числови стойности за сравнение
+// Преобразуване на стринг "YYYY-MM" в число за сравнение
 const parseMonthYear = (ymStr) => {
   const [year, month] = ymStr.split('-').map(Number);
   return year * 12 + month;
@@ -28,9 +28,7 @@ export default function App() {
     fetch('/air_data.php')  // http://localhost/Evolution/air-app/air_data.php '  /air_data.php
 		.then(response => response.text())
 		.then(rawText => {
-			const cleanText = rawText.split('<div')[0].trim();  
-			console.log(cleanText);
-			
+			const cleanText = rawText.split('<div')[0].trim();			
 			const dataT = JSON.parse(cleanText);
 			console.log(dataT);
 
@@ -41,7 +39,6 @@ export default function App() {
 			setData(payload);
 			const months = Object.keys(payload).sort();
 			setAvailableMonths(months);
-			//console.log(months);
 
 			if (months.length > 0) {
 			  setStartMonth(months[0]);
